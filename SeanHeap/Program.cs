@@ -10,22 +10,37 @@ namespace SeanHeap
     {
         static void Main(string[] args)
         {
-            SeanHeap<int> heap = new SeanHeap<int>();
+            SeanMinHeap<int> minHeap = new SeanMinHeap<int>();
+            SeanMaxHeap<int> maxHeap = new SeanMaxHeap<int>();
 
-            heap.Add(3);
-            heap.Add(7);
-            heap.Add(2);
-            heap.Add(9);
-            heap.Add(8);
-            heap.Add(1);
-            heap.Add(4);
-            heap.Add(5);
+            minHeap.Add(3);
+            minHeap.Add(7);
+            minHeap.Add(2);
+            minHeap.Add(9);
+            minHeap.Add(-8);
+            minHeap.Add(1);
+            minHeap.Add(4);
+            minHeap.Add(5);
 
-            heap.Peak();
+            minHeap.Peak();
 
-            heap.Pop();
-            heap.Pop();
+            minHeap.Pop();
+            minHeap.Pop();
 
+
+            maxHeap.Add(3);
+            maxHeap.Add(7);
+            maxHeap.Add(2);
+            maxHeap.Add(9);
+            maxHeap.Add(8);
+            maxHeap.Add(1);
+            maxHeap.Add(4);
+            maxHeap.Add(5);
+
+            maxHeap.Peak();
+
+            maxHeap.Pop();
+            maxHeap.Pop();
         }
     }
 }

@@ -6,15 +6,19 @@ using System.Threading.Tasks;
 
 namespace SeanHeap
 {
-    class SeanHeap<T> where T : IComparable
+    class SeanMinHeap<T> where T : IComparable
     {
 
         private T[] heap;
         public int Size{ get; private set;}
 
-        public SeanHeap() { heap = new T[11]; }
-        public SeanHeap(T firstValue) { heap = new T[10]; heap[1] = firstValue; Size++; }
+        public SeanMinHeap() { heap = new T[11]; }
+        public SeanMinHeap(T firstValue) { heap = new T[11]; heap[1] = firstValue; Size++; }
 
+        /// <summary>
+        /// Adds a new value to the heap and sorts it into place.
+        /// </summary>
+        /// <param name="newValue">The value to be added to the heap.</param>
         public void Add(T newValue)
         {
             Size++;
@@ -32,22 +36,30 @@ namespace SeanHeap
             SortValue(Size);
         }
         
-        private void SortValue(int place)
+        private void SortValue(int index)
         {
-            if(heap[place].CompareTo(heap[place / 2]) < 0)
+            if(heap[index].CompareTo(heap[index / 2]) < 0 && index / 2 != 0) //we don't want to use heap[0]
             {
-                T tmp = heap[place / 2];
-                heap[place / 2] = heap[place];
-                heap[place] = tmp;
-                SortValue(place / 2);
+                T tmp = heap[index / 2];
+                heap[index / 2] = heap[index];
+                heap[index] = tmp;
+                SortValue(index / 2);
             }
         }
 
+        /// <summary>
+        /// Returns the smallest value in the heap.
+        /// </summary>
+        /// <returns></returns>
         public T Peak()
         {
             return heap[1];
         }
 
+        /// <summary>
+        /// Removes the smallest value in the heap and returns it.
+        /// </summary>
+        /// <returns></returns>
         public T Pop()
         {
             T min = heap[1];
@@ -58,15 +70,10 @@ namespace SeanHeap
 
         private void Replace(int index)
         {
-            if (index * 2 > Size)
+            if (index * 2 >= Size)
             {
                 heap[index] = heap[Size];
                 heap[Size] = default(T);
-            }
-            else if (index * 2 == Size)
-            {
-                heap[index] = heap[index * 2];
-                heap[index * 2] = default(T);
             }
             else
             {
