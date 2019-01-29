@@ -53,6 +53,11 @@ namespace SeanHeap
         /// <returns></returns>
         public T Peak()
         {
+            if (Size == 0)
+            {
+                return default(T);
+            }
+
             return heap[1];
         }
 
@@ -62,6 +67,11 @@ namespace SeanHeap
         /// <returns></returns>
         public T Pop()
         {
+            if (Size == 0)
+            {
+                return default(T);
+            }
+
             T min = heap[1];
             Replace(1);
             Size--;
