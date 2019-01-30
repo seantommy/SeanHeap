@@ -35,10 +35,50 @@ namespace SeanHeap
             SortValue(Size);
         }
 
-        //must redo logic from Min to MinMax.
+        //I think this works.
         private void SortValue(int index)
         {
-            if (heap[index].CompareTo(heap[index / 2]) < 0 && index / 2 != 0) //we don't want to use heap[0]
+            int layer = Convert.ToInt32(Math.Truncate(Math.Log(index, 2))); //Math.* is hard
+            if (layer == 0)
+            {
+                return;
+            }
+            else if (layer % 2 == 0) //if it's an even-numbered layer, it's a min layer
+            {
+                SortMin(index);
+            }
+            else //otherwise, it's a max layer
+            {
+                SortMax(index);
+            } 
+        }
+
+        private void SortMin(int index)
+        {
+            if (heap[index].CompareTo(heap[index / 4]) < 0 && index / 4 != 0) //we don't want to use heap[0]
+            {
+                T tmp = heap[index / 4];
+                heap[index / 4] = heap[index];
+                heap[index] = tmp;
+                SortValue(index / 4);
+            }else if(heap[index].CompareTo(heap[index / 2]) > 0 && index / 2 != 0)
+            {
+                T tmp = heap[index / 2];
+                heap[index / 2] = heap[index];
+                heap[index] = tmp;
+                SortValue(index / 2);
+            }
+        }
+
+        private void SortMax(int index)
+        {
+            if (heap[index].CompareTo(heap[index / 4]) > 0 && index / 4 != 0) //we don't want to use heap[0]
+            {
+                T tmp = heap[index / 4];
+                heap[index / 4] = heap[index];
+                heap[index] = tmp;
+                SortValue(index / 4);
+            }else if(heap[index].CompareTo(heap[index/2]) < 0 && index / 2 != 0)
             {
                 T tmp = heap[index / 2];
                 heap[index / 2] = heap[index];
