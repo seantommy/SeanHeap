@@ -34,8 +34,7 @@ namespace SeanHeap
             heap[Size] = newValue;
             SortValue(Size);
         }
-
-        //I think this works.
+        
         private void SortValue(int index)
         {
             int layer = Convert.ToInt32(Math.Truncate(Math.Log(index, 2))); //Math.* is hard
@@ -142,7 +141,7 @@ namespace SeanHeap
             }
 
             T min = heap[1];
-            Replace(1);
+            ReplaceMin(1);
             Size--;
             return min;
         }
@@ -173,12 +172,12 @@ namespace SeanHeap
                 if (heap[2].CompareTo(heap[3]) > 0)
                 {
                     max = heap[2];
-                    Replace(2);
+                    ReplaceMax(2);
                 }
                 else
                 {
                     max = heap[3];
-                    Replace(3);
+                    ReplaceMax(3);
                 }
             }
 
@@ -186,27 +185,67 @@ namespace SeanHeap
             return max;
         }
 
-        //must adjust logic from Min to MinMax
-        private void Replace(int index)
+        private void ReplaceMin(int index)
         {
-            if (index * 2 >= Size)
+            int replacement = 2;
+            if (index * 4 >= Size)
             {
-                heap[index] = heap[Size];
-                heap[Size] = default(T);
-            }
-            else
-            {
-                if (heap[index * 2].CompareTo(heap[index * 2 + 1]) < 0)
+                if(index * 2 >= Size || index * 4 == Size)
                 {
-                    heap[index] = heap[index * 2];
-                    Replace(index * 2);
+                    heap[index] = heap[Size];
+                    heap[Size] = default(T);
                 }
                 else
                 {
-                    heap[index] = heap[index * 2 + 1];
-                    Replace(index * 2 + 1);
+                    heap[index] = heap[Size];
+                    heap[Size] = default(T);
                 }
             }
+            else
+            {
+                for(int x = index * 4; x < index * 4 + 4; x++)
+                {
+                    if(heap[x].CompareTo(heap[replacement]) < 0)
+                    {
+                        replacement = x;
+                    }
+                }
+
+                heap[index] = heap[replacement];
+                ReplaceMin(replacement);
+            }
+        }
+
+        private void ReplaceMax(int index)
+        {
+            int replacement = 1;
+            if (index * 4 >= Size)
+            {
+                if (index * 2 >= Size || index * 4 == Size)
+                {
+                    heap[index] = heap[Size];
+                    heap[Size] = default(T);
+                }
+                else
+                {
+                    heap[index] = heap[Size];
+                    heap[Size] = default(T);
+                }
+            }
+            else
+            {
+                for (int x = index * 4; x < index * 4 + 4; x++)
+                {
+                    if (heap[x].CompareTo(heap[replacement]) > 0)
+                    {
+                        replacement = x;
+                    }
+                }
+
+                heap[index] = heap[replacement];
+                ReplaceMax(replacement);
+            }
+
         }
     }
 }
