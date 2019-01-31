@@ -34,11 +34,11 @@ namespace SeanHeap
             heap[Size] = newValue;
             SortValue(Size);
         }
-        
+
         private void SortValue(int index)
         {
             int layer = Convert.ToInt32(Math.Truncate(Math.Log(index, 2))); //Math.* is hard
-            if (layer == 0)
+            if (layer == 0) //Layers start at 0. Layer 0 is min, layer 1 is max.
             {
                 return;
             }
@@ -49,7 +49,7 @@ namespace SeanHeap
             else //otherwise, it's a max layer
             {
                 SortMax(index);
-            } 
+            }
         }
 
         private void SortMin(int index)
@@ -60,7 +60,8 @@ namespace SeanHeap
                 heap[index / 4] = heap[index];
                 heap[index] = tmp;
                 SortValue(index / 4);
-            }else if(heap[index].CompareTo(heap[index / 2]) > 0 && index / 2 != 0)
+            }
+            else if (heap[index].CompareTo(heap[index / 2]) > 0 && index / 2 != 0)
             {
                 T tmp = heap[index / 2];
                 heap[index / 2] = heap[index];
@@ -77,7 +78,8 @@ namespace SeanHeap
                 heap[index / 4] = heap[index];
                 heap[index] = tmp;
                 SortValue(index / 4);
-            }else if(heap[index].CompareTo(heap[index/2]) < 0 && index / 2 != 0)
+            }
+            else if (heap[index].CompareTo(heap[index / 2]) < 0 && index / 2 != 0)
             {
                 T tmp = heap[index / 2];
                 heap[index / 2] = heap[index];
@@ -109,10 +111,12 @@ namespace SeanHeap
             if (Size == 0)
             {
                 return default(T);
-            }else if(Size == 1)
+            }
+            else if (Size == 1)
             {
                 return heap[1];
-            }else if(Size == 2)
+            }
+            else if (Size == 2)
             {
                 return heap[2];
             }
@@ -135,7 +139,7 @@ namespace SeanHeap
         /// <returns></returns>
         public T PopMin()
         {
-            if(Size == 0)
+            if (Size == 0)
             {
                 return default(T);
             }
@@ -157,12 +161,14 @@ namespace SeanHeap
             if (Size == 0)
             {
                 return default(T);
-            }else if(Size == 1)
+            }
+            else if (Size == 1)
             {
                 max = heap[1];
                 heap[1] = default(T);
-                
-            }else if(Size == 2)
+
+            }
+            else if (Size == 2)
             {
                 max = heap[2];
                 heap[2] = default(T);
@@ -190,22 +196,15 @@ namespace SeanHeap
             int replacement = 2;
             if (index * 4 >= Size)
             {
-                if(index * 2 >= Size || index * 4 == Size)
-                {
-                    heap[index] = heap[Size];
-                    heap[Size] = default(T);
-                }
-                else
-                {
-                    heap[index] = heap[Size];
-                    heap[Size] = default(T);
-                }
+                heap[index] = heap[Size];
+                heap[Size] = default(T);
+                SortValue(index);
             }
             else
             {
-                for(int x = index * 4; x < index * 4 + 4; x++)
+                for (int x = index * 4; x < index * 4 + 4; x++)
                 {
-                    if(heap[x].CompareTo(heap[replacement]) < 0)
+                    if (x <= Size && heap[x].CompareTo(heap[replacement]) < 0)
                     {
                         replacement = x;
                     }
@@ -221,22 +220,15 @@ namespace SeanHeap
             int replacement = 1;
             if (index * 4 >= Size)
             {
-                if (index * 2 >= Size || index * 4 == Size)
-                {
-                    heap[index] = heap[Size];
-                    heap[Size] = default(T);
-                }
-                else
-                {
-                    heap[index] = heap[Size];
-                    heap[Size] = default(T);
-                }
+                heap[index] = heap[Size];
+                heap[Size] = default(T);
+                SortValue(index);
             }
             else
             {
                 for (int x = index * 4; x < index * 4 + 4; x++)
                 {
-                    if (heap[x].CompareTo(heap[replacement]) > 0)
+                    if (x <= Size && heap[x].CompareTo(heap[replacement]) > 0)
                     {
                         replacement = x;
                     }

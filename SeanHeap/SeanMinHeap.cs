@@ -10,7 +10,7 @@ namespace SeanHeap
     {
 
         private T[] heap;
-        public int Size{ get; private set;}
+        public int Size { get; private set; }
 
         public SeanMinHeap() { heap = new T[11]; }
         public SeanMinHeap(T firstValue) { heap = new T[11]; heap[1] = firstValue; Size++; }
@@ -25,7 +25,7 @@ namespace SeanHeap
             if (Size == heap.Length - 1)
             {
                 T[] newHeap = new T[(heap.Length) * 2];
-                for(int x = 1; x < heap.Length; x++)
+                for (int x = 1; x < heap.Length; x++)
                 {
                     newHeap[x] = heap[x];
                 }
@@ -35,10 +35,10 @@ namespace SeanHeap
             heap[Size] = newValue;
             SortValue(Size);
         }
-        
+
         private void SortValue(int index)
         {
-            if(heap[index].CompareTo(heap[index / 2]) < 0 && index / 2 != 0) //we don't want to use heap[0]
+            if (heap[index].CompareTo(heap[index / 2]) < 0 && index / 2 != 0) //we don't want to use heap[0]
             {
                 T tmp = heap[index / 2];
                 heap[index / 2] = heap[index];

@@ -13,6 +13,7 @@ namespace SeanHeap
             SeanMinHeap<int> minHeap = new SeanMinHeap<int>();
             SeanMaxHeap<int> maxHeap = new SeanMaxHeap<int>();
             SeanMinMaxHeap<int> minMaxHeap = new SeanMinMaxHeap<int>();
+            /*
             minHeap.Add(3);
             minHeap.Add(7);
             minHeap.Add(2);
@@ -41,19 +42,26 @@ namespace SeanHeap
 
             maxHeap.Pop();
             maxHeap.Pop();
+            */
             
-
             for(int x = 1; x < 30; x++)
             {
                 minMaxHeap.Add(x);
             }
 
+            /*
+            for(int y = 29; y > 0; y--)
+            {
+                minMaxHeap.Add(y);
+            }*/
+
             minMaxHeap.PopMin();
             minMaxHeap.PopMax();
             minMaxHeap.PopMin();
             minMaxHeap.PopMax();
             minMaxHeap.PopMin();
             minMaxHeap.PopMax();
+            //minMaxHeap.PopMin();
         }
     }
 }
