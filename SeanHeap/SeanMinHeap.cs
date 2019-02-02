@@ -24,16 +24,21 @@ namespace SeanHeap
             Size++;
             if (Size == heap.Length - 1)
             {
-                T[] newHeap = new T[(heap.Length) * 2];
-                for (int x = 1; x < heap.Length; x++)
-                {
-                    newHeap[x] = heap[x];
-                }
-                heap = newHeap;
+                ExpandHeap();
             }
 
             heap[Size] = newValue;
             SortValue(Size);
+        }
+
+        private void ExpandHeap()
+        {
+            T[] newHeap = new T[(heap.Length) * 2];
+            for (int x = 1; x < heap.Length; x++)
+            {
+                newHeap[x] = heap[x];
+            }
+            heap = newHeap;
         }
 
         private void SortValue(int index)
@@ -84,6 +89,7 @@ namespace SeanHeap
             {
                 heap[index] = heap[Size];
                 heap[Size] = default(T);
+                SortValue(index);
             }
             else
             {

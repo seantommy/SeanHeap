@@ -23,16 +23,21 @@ namespace SeanHeap
             Size++;
             if (Size == heap.Length - 1)
             {
-                T[] newHeap = new T[(heap.Length) * 2];
-                for (int x = 1; x < heap.Length; x++)
-                {
-                    newHeap[x] = heap[x];
-                }
-                heap = newHeap;
+                ExpandHeap();
             }
 
             heap[Size] = newValue;
             SortValue(Size);
+        }
+
+        private void ExpandHeap()
+        {
+            T[] newHeap = new T[(heap.Length) * 2];
+            for (int x = 1; x < heap.Length; x++)
+            {
+                newHeap[x] = heap[x];
+            }
+            heap = newHeap;
         }
 
         private void SortValue(int index)
@@ -193,7 +198,6 @@ namespace SeanHeap
 
         private void ReplaceMin(int index)
         {
-            int replacement = 2;
             if (index * 4 >= Size)
             {
                 heap[index] = heap[Size];
@@ -202,22 +206,29 @@ namespace SeanHeap
             }
             else
             {
-                for (int x = index * 4; x < index * 4 + 4; x++)
-                {
-                    if (x <= Size && heap[x].CompareTo(heap[replacement]) < 0)
-                    {
-                        replacement = x;
-                    }
-                }
-
+                int replacement = GetSmallestGrandchild(index);
                 heap[index] = heap[replacement];
                 ReplaceMin(replacement);
             }
         }
 
+        private int GetSmallestGrandchild(int grandparent)
+        {
+            int grandchild = 2;
+
+            for (int x = grandparent * 4; x < grandparent * 4 + 4; x++)
+            {
+                if (x <= Size && heap[x].CompareTo(heap[grandchild]) < 0)
+                {
+                    grandchild = x;
+                }
+            }
+
+            return grandchild;
+        }
+
         private void ReplaceMax(int index)
         {
-            int replacement = 1;
             if (index * 4 >= Size)
             {
                 heap[index] = heap[Size];
@@ -226,18 +237,25 @@ namespace SeanHeap
             }
             else
             {
-                for (int x = index * 4; x < index * 4 + 4; x++)
-                {
-                    if (x <= Size && heap[x].CompareTo(heap[replacement]) > 0)
-                    {
-                        replacement = x;
-                    }
-                }
-
+                int replacement = GetLargestGrandchild(index);
                 heap[index] = heap[replacement];
                 ReplaceMax(replacement);
             }
+        }
 
+        private int GetLargestGrandchild(int grandparent)
+        {
+            int grandchild = 0;
+
+            for (int x = grandparent * 4; x < grandparent * 4 + 4; x++)
+            {
+                if (x <= Size && heap[x].CompareTo(heap[grandchild]) > 0)
+                {
+                    grandchild = x;
+                }
+            }
+
+            return grandchild;
         }
     }
 }
